@@ -10,6 +10,7 @@ export const RootContainer = styled.div`
 export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
+  margin-bottom: 90px;
 `;
 
 export const ButtonConatiner = styled.div`
