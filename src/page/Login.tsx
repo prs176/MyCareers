@@ -1,4 +1,4 @@
-import BoxContainer from "../component/BoxContainer";
+import AuthContainer from "../component/AuthContainer";
 import LabelButton from "../component/LabelButton";
 import Logo from "../component/Logo";
 import TextField from "../component/TextField";
@@ -9,13 +9,16 @@ import {
   UnderlineButton,
   RegisterTextContainer,
   ButtonConatiner,
+  LogoWrapper,
 } from "./styled/Login";
 
 const Login = (): JSX.Element => {
   return (
     <RootContainer>
-      <BoxContainer>
-        <Logo />
+      <AuthContainer>
+        <LogoWrapper>
+          <Logo type="big" />
+        </LogoWrapper>
         <InputContainer>
           <TextField label="아이디" placeholder="아이디"></TextField>
           <TextField label="비밀번호" placeholder="비밀번호"></TextField>
@@ -27,7 +30,7 @@ const Login = (): JSX.Element => {
             <UnderlineButton>회원가입</UnderlineButton>
           </RegisterTextContainer>
         </ButtonConatiner>
-      </BoxContainer>
+      </AuthContainer>
     </RootContainer>
   );
 };

@@ -1,4 +1,4 @@
-import BoxContainer from "../component/BoxContainer";
+import AuthContainer from "../component/AuthContainer";
 import LabelButton from "../component/LabelButton";
 import TextField from "../component/TextField";
 import { ButtonConatiner, InputContainer, RootContainer } from "./styled/Register";
@@ -6,7 +6,7 @@ import { ButtonConatiner, InputContainer, RootContainer } from "./styled/Registe
 const Register = (): JSX.Element => {
   return (
     <RootContainer>
-      <BoxContainer>
+      <AuthContainer>
         <InputContainer>
           <TextField label="아이디" placeholder="아이디"></TextField>
           <TextField label="비밀번호" placeholder="비밀번호"></TextField>
@@ -17,7 +17,7 @@ const Register = (): JSX.Element => {
         <ButtonConatiner>
           <LabelButton>회원가입</LabelButton>
         </ButtonConatiner>
-      </BoxContainer>
+      </AuthContainer>
     </RootContainer>
   );
 };

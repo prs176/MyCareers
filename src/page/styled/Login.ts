@@ -7,6 +7,10 @@ export const RootContainer = styled.div`
   height: 100%;
 `;
 
+export const LogoWrapper = styled.div`
+  margin: 0px auto;
+`;
+
 export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;

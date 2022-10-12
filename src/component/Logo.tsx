@@ -1,11 +1,15 @@
 import { RootContainer, Image, Title } from "./styled/Logo";
 import logo from "../asset/logo.png";
 
-const Logo = (): JSX.Element => {
+interface Props {
+  type: "small" | "big";
+}
+
+const Logo = ({ type }: Props): JSX.Element => {
   return (
     <RootContainer>
-      <Image alt="" src={logo}></Image>
-      <Title>My Career</Title>
+      <Image alt="" src={logo} type={type}></Image>
+      <Title type={type}>My Career</Title>
     </RootContainer>
   );
 };
