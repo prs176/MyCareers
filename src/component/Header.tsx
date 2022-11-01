@@ -1,3 +1,5 @@
+import { IconButton } from "@mui/material";
+import HomeIcon from "@mui/icons-material/Home";
 import Logo from "./Logo";
 import { Divider, RootContainer, SearchInput } from "./styled/Header";
 
@@ -6,7 +8,12 @@ const Header = (): JSX.Element => {
     <div>
       <RootContainer>
         <Logo type="small"></Logo>
-        <SearchInput></SearchInput>
+        <div>
+          <SearchInput></SearchInput>
+          <IconButton>
+            <HomeIcon />
+          </IconButton>
+        </div>
       </RootContainer>
       <Divider></Divider>
     </div>
