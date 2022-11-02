@@ -45,7 +45,27 @@ const Resume = (): JSX.Element => {
   const [isEditProfile, setIsEditProfile] = useState<boolean>(false);
   const [careers, setCareers] = useState<{ career: Career; isEdit: boolean }[]>([
     {
-      career: { idx: 1, name: "로미", role: "로미", period: "로미 ~ 로미", explanation: "로미" },
+      career: {
+        idx: 0,
+        userIdx: -1,
+        name: "로미",
+        role: "로미",
+        period: "로미 ~ 로미",
+        explanation: "로미",
+        logs: [
+          {
+            idx: 0,
+            recordIdx: 0,
+            title: "로미",
+            intro: "로미",
+            period: "로미",
+            learning: "로미",
+            contribution: "로미",
+            overcame: "로미",
+            etc: "로미",
+          },
+        ],
+      },
       isEdit: false,
     },
   ]);
@@ -53,29 +73,47 @@ const Resume = (): JSX.Element => {
     {
       school: {
         idx: 1,
+        userIdx: -1,
         name: "로미",
         department: "로미",
         period: "로미 ~ 로미",
         explanation: "로미",
+        logs: [],
       },
       isEdit: false,
     },
   ]);
   const [techStacks, setTechStacks] = useState<{ techStack: TechStack; isEdit: boolean }[]>([
     {
-      techStack: { idx: 1, name: "로미" },
+      techStack: { idx: 2, userIdx: -1, name: "로미", logs: [] },
       isEdit: false,
     },
   ]);
   const [projects, setProjects] = useState<{ project: Project; isEdit: boolean }[]>([
     {
-      project: { idx: 1, name: "로미", role: "로미", period: "로미 ~ 로미", explanation: "로미" },
+      project: {
+        idx: 3,
+        userIdx: -1,
+        name: "로미",
+        role: "로미",
+        period: "로미 ~ 로미",
+        explanation: "로미",
+        logs: [],
+      },
       isEdit: false,
     },
   ]);
   const [teams, setTeams] = useState<{ team: Team; isEdit: boolean }[]>([
     {
-      team: { idx: 1, name: "로미", role: "로미", period: "로미 ~ 로미", explanation: "로미" },
+      team: {
+        idx: 4,
+        userIdx: -1,
+        name: "로미",
+        role: "로미",
+        period: "로미 ~ 로미",
+        explanation: "로미",
+        logs: [],
+      },
       isEdit: false,
     },
   ]);
@@ -84,20 +122,53 @@ const Resume = (): JSX.Element => {
   >([
     {
       certification: {
-        idx: 1,
+        idx: 5,
+        userIdx: -1,
         name: "로미",
         from: "로미",
         start: "로미",
         end: "로미",
         id: "로미",
         explanation: "로미",
+        logs: [],
       },
       isEdit: false,
     },
   ]);
   const [awards, setAwards] = useState<{ award: Award; isEdit: boolean }[]>([
     {
-      award: { idx: 1, name: "로미", from: "로미", start: "로미", explanation: "로미" },
+      award: {
+        idx: 6,
+        userIdx: -1,
+        name: "로미",
+        from: "로미",
+        start: "로미",
+        explanation: "로미",
+        logs: [
+          {
+            idx: 1,
+            recordIdx: 6,
+            title: "로미",
+            intro: "로미",
+            period: "로미",
+            learning: "로미",
+            contribution: "로미",
+            overcame: "로미",
+            etc: "로미",
+          },
+          {
+            idx: 2,
+            recordIdx: 6,
+            title: "로미",
+            intro: "로미",
+            period: "로미",
+            learning: "로미",
+            contribution: "로미",
+            overcame: "로미",
+            etc: "로미",
+          },
+        ],
+      },
       isEdit: false,
     },
   ]);
@@ -168,9 +239,7 @@ const Resume = (): JSX.Element => {
         </ToolContainer>
         <br></br>
         {isEditProfile ? (
-          <>
-            <input type="text" onChange={onChangeIntro} value={intro}></input>
-          </>
+          <input type="text" onChange={onChangeIntro} value={intro}></input>
         ) : (
           <>{user.intro}</>
         )}
@@ -185,7 +254,15 @@ const Resume = (): JSX.Element => {
           setCareers([
             ...careers,
             {
-              career: { idx: -1, name: "", role: "", period: "", explanation: "" },
+              career: {
+                idx: -1,
+                userIdx: -1,
+                name: "",
+                role: "",
+                period: "",
+                explanation: "",
+                logs: [],
+              },
               isEdit: true,
             },
           ]);
@@ -209,6 +286,39 @@ const Resume = (): JSX.Element => {
             ></CareerCardEdit>
           ) : (
             <CareerCard
+              onAdd={() => {
+                setCareers(
+                  careers.map((it) => {
+                    if (it.career.idx === career.career.idx) {
+                      return {
+                        ...it,
+                        career: {
+                          ...it.career,
+                          logs: [
+                            ...it.career.logs,
+                            {
+                              idx: -1,
+                              recordIdx: career.career.idx,
+                              title: "",
+                              intro: "",
+                              period: "",
+                            },
+                          ],
+                        },
+                      };
+                    } else {
+                      return it;
+                    }
+                  })
+                );
+              }}
+              onEditLog={() => {
+                setIsEdit(true);
+              }}
+              onDeleteLog={() => {}}
+              onDone={() => {
+                setIsEdit(false);
+              }}
               onEdit={() => {
                 if (isEdit) {
                   return;
@@ -241,7 +351,15 @@ const Resume = (): JSX.Element => {
           setSchools([
             ...schools,
             {
-              school: { idx: -1, name: "", department: "", period: "", explanation: "" },
+              school: {
+                idx: -1,
+                userIdx: -1,
+                name: "",
+                department: "",
+                period: "",
+                explanation: "",
+                logs: [],
+              },
               isEdit: true,
             },
           ]);
@@ -264,6 +382,39 @@ const Resume = (): JSX.Element => {
             />
           ) : (
             <SchoolCard
+              onAdd={() => {
+                setSchools(
+                  schools.map((it) => {
+                    if (it.school.idx === school.school.idx) {
+                      return {
+                        ...it,
+                        school: {
+                          ...it.school,
+                          logs: [
+                            ...it.school.logs,
+                            {
+                              idx: -1,
+                              recordIdx: school.school.idx,
+                              title: "",
+                              intro: "",
+                              period: "",
+                            },
+                          ],
+                        },
+                      };
+                    } else {
+                      return it;
+                    }
+                  })
+                );
+              }}
+              onEditLog={() => {
+                setIsEdit(true);
+              }}
+              onDeleteLog={() => {}}
+              onDone={() => {
+                setIsEdit(false);
+              }}
               onEdit={() => {
                 if (isEdit) {
                   return;
@@ -294,7 +445,7 @@ const Resume = (): JSX.Element => {
           setTechStacks([
             ...techStacks,
             {
-              techStack: { idx: -1, name: "" },
+              techStack: { idx: -1, userIdx: -1, name: "", logs: [] },
               isEdit: true,
             },
           ]);
@@ -318,6 +469,39 @@ const Resume = (): JSX.Element => {
             />
           ) : (
             <TechStackCard
+              onAdd={() => {
+                setTechStacks(
+                  techStacks.map((it) => {
+                    if (it.techStack.idx === techStack.techStack.idx) {
+                      return {
+                        ...it,
+                        techStack: {
+                          ...it.techStack,
+                          logs: [
+                            ...it.techStack.logs,
+                            {
+                              idx: -1,
+                              recordIdx: techStack.techStack.idx,
+                              title: "",
+                              intro: "",
+                              period: "",
+                            },
+                          ],
+                        },
+                      };
+                    } else {
+                      return it;
+                    }
+                  })
+                );
+              }}
+              onEditLog={() => {
+                setIsEdit(true);
+              }}
+              onDeleteLog={() => {}}
+              onDone={() => {
+                setIsEdit(false);
+              }}
               onEdit={() => {
                 if (isEdit) {
                   return;
@@ -348,7 +532,15 @@ const Resume = (): JSX.Element => {
           setProjects([
             ...projects,
             {
-              project: { idx: -1, name: "", role: "", period: "", explanation: "" },
+              project: {
+                idx: -1,
+                userIdx: -1,
+                name: "",
+                role: "",
+                period: "",
+                explanation: "",
+                logs: [],
+              },
               isEdit: true,
             },
           ]);
@@ -372,6 +564,39 @@ const Resume = (): JSX.Element => {
             />
           ) : (
             <ProjectCard
+              onAdd={() => {
+                setProjects(
+                  projects.map((it) => {
+                    if (it.project.idx === project.project.idx) {
+                      return {
+                        ...it,
+                        project: {
+                          ...it.project,
+                          logs: [
+                            ...it.project.logs,
+                            {
+                              idx: -1,
+                              recordIdx: project.project.idx,
+                              title: "",
+                              intro: "",
+                              period: "",
+                            },
+                          ],
+                        },
+                      };
+                    } else {
+                      return it;
+                    }
+                  })
+                );
+              }}
+              onEditLog={() => {
+                setIsEdit(true);
+              }}
+              onDeleteLog={() => {}}
+              onDone={() => {
+                setIsEdit(false);
+              }}
               onEdit={() => {
                 if (isEdit) {
                   return;
@@ -402,7 +627,15 @@ const Resume = (): JSX.Element => {
           setTeams([
             ...teams,
             {
-              team: { idx: -1, name: "", role: "", period: "", explanation: "" },
+              team: {
+                idx: -1,
+                userIdx: -1,
+                name: "",
+                role: "",
+                period: "",
+                explanation: "",
+                logs: [],
+              },
               isEdit: true,
             },
           ]);
@@ -426,6 +659,39 @@ const Resume = (): JSX.Element => {
             />
           ) : (
             <TeamCard
+              onAdd={() => {
+                setTeams(
+                  teams.map((it) => {
+                    if (it.team.idx === team.team.idx) {
+                      return {
+                        ...it,
+                        team: {
+                          ...it.team,
+                          logs: [
+                            ...it.team.logs,
+                            {
+                              idx: -1,
+                              recordIdx: team.team.idx,
+                              title: "",
+                              intro: "",
+                              period: "",
+                            },
+                          ],
+                        },
+                      };
+                    } else {
+                      return it;
+                    }
+                  })
+                );
+              }}
+              onEditLog={() => {
+                setIsEdit(true);
+              }}
+              onDeleteLog={() => {}}
+              onDone={() => {
+                setIsEdit(false);
+              }}
               onEdit={() => {
                 if (isEdit) {
                   return;
@@ -456,12 +722,14 @@ const Resume = (): JSX.Element => {
           certifications.push({
             certification: {
               idx: -1,
+              userIdx: -1,
               name: "",
               from: "",
               start: "",
               end: "",
               id: "",
               explanation: "",
+              logs: [],
             },
             isEdit: true,
           });
@@ -486,6 +754,39 @@ const Resume = (): JSX.Element => {
             />
           ) : (
             <CertificationCard
+              onAdd={() => {
+                setCertifications(
+                  certifications.map((it) => {
+                    if (it.certification.idx === certification.certification.idx) {
+                      return {
+                        ...it,
+                        award: {
+                          ...it.certification,
+                          logs: [
+                            ...it.certification.logs,
+                            {
+                              idx: -1,
+                              recordIdx: certification.certification.idx,
+                              title: "",
+                              intro: "",
+                              period: "",
+                            },
+                          ],
+                        },
+                      };
+                    } else {
+                      return it;
+                    }
+                  })
+                );
+              }}
+              onEditLog={() => {
+                setIsEdit(true);
+              }}
+              onDeleteLog={() => {}}
+              onDone={() => {
+                setIsEdit(false);
+              }}
               onEdit={() => {
                 if (isEdit) {
                   return;
@@ -513,11 +814,21 @@ const Resume = (): JSX.Element => {
           if (isEdit) {
             return;
           }
-          awards.push({
-            award: { idx: -1, name: "", from: "", start: "", explanation: "" },
-            isEdit: false,
-          });
-          setAwards(awards);
+          setAwards([
+            ...awards,
+            {
+              award: {
+                idx: -1,
+                userIdx: -1,
+                name: "",
+                from: "",
+                start: "",
+                explanation: "",
+                logs: [],
+              },
+              isEdit: true,
+            },
+          ]);
           setIsEdit(true);
         }}
       >
@@ -538,6 +849,39 @@ const Resume = (): JSX.Element => {
             />
           ) : (
             <AwardCard
+              onAdd={() => {
+                setAwards(
+                  awards.map((it) => {
+                    if (it.award.idx === award.award.idx) {
+                      return {
+                        ...it,
+                        award: {
+                          ...it.award,
+                          logs: [
+                            ...it.award.logs,
+                            {
+                              idx: -1,
+                              recordIdx: award.award.idx,
+                              title: "",
+                              intro: "",
+                              period: "",
+                            },
+                          ],
+                        },
+                      };
+                    } else {
+                      return it;
+                    }
+                  })
+                );
+              }}
+              onEditLog={() => {
+                setIsEdit(true);
+              }}
+              onDeleteLog={() => {}}
+              onDone={() => {
+                setIsEdit(false);
+              }}
               onEdit={() => {
                 if (isEdit) {
                   return;

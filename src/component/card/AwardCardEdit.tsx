@@ -1,4 +1,4 @@
-import { Key, RootContainer, ToolContainer } from "../styled/Card";
+import { DateInput, Key, RootContainer, TextInput, ToolContainer } from "../styled/Card";
 import DoneIcon from "@mui/icons-material/Done";
 import { IconButton } from "@mui/material";
 import { Award } from "../../models/user";
@@ -32,19 +32,19 @@ const AwardCardEdit = ({ award, onDone }: Props): JSX.Element => {
         </IconButton>
       </ToolContainer>
       <Key>이름</Key>
-      <input type="text" onChange={onChangeName} value={name}></input>
+      <TextInput type="text" onChange={onChangeName} value={name}></TextInput>
       <br></br>
       <br></br>
       <Key>발행기관</Key>
-      <input type="text" onChange={onChangeFrom} value={from}></input>
+      <TextInput type="text" onChange={onChangeFrom} value={from}></TextInput>
       <br></br>
       <br></br>
       <Key>발행일</Key>
-      <input type="date" onChange={onChangeStart} value={start}></input>
+      <DateInput type="date" onChange={onChangeStart} value={start}></DateInput>
       <br></br>
       <br></br>
       <Key>설명</Key>
-      <input type="text" onChange={onChangeExplanation} value={explanation}></input>
+      <TextInput type="text" onChange={onChangeExplanation} value={explanation}></TextInput>
     </RootContainer>
   );
 };
