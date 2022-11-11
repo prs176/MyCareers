@@ -1,12 +1,8 @@
 import styled from "styled-components";
 
 export const RootContainer = styled.div`
-  width: 290px;
-  margin: 5px;
-  margin-top: 0px;
-  padding: 10px 20px;
-  border: 1px solid lightgray;
-  border-radius: 15px;
+  padding-left: 20px;
+  padding-right: 10px;
 `;
 
 export const ToolContainer = styled.div`
@@ -16,30 +12,40 @@ export const ToolContainer = styled.div`
   align-items: center;
 `;
 
-export const NameText = styled.p`
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  width: 200px;
-  font-size: 1.2em;
-  font-weight: 600;
+export const Divider = styled.hr`
+  border: 0.5px solid lightgray;
   margin: 0px;
-  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 `;
 
 export const ContentContainer = styled.div`
   cursor: pointer;
 `;
 
-export const NameInput = styled.input`
-  font-size: 1.2em;
-  font-family: inherit;
-  font-weight: 600;
+export const NameText = styled.p`
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 1.1em;
   margin: 0px;
   margin-right: 10px;
 `;
 
+export const NameInput = styled.input`
+  font-size: 1.1em;
+  font-family: inherit;
+  margin: 0px;
+  margin-right: 10px;
+`;
+
+export const FieldContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
 export const FieldWrapper = styled.div`
+  width: 50%;
   height: 20px;
   display: flex;
   align-items: center;
@@ -49,22 +55,18 @@ export const FieldWrapper = styled.div`
 export const TitleText = styled.p`
   font-size: 0.9em;
   margin: 0px;
-  width: 60px;
+  margin-right: 10px;
   color: #727272;
 `;
 
 export const ContentText = styled.p`
+  text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  text-overflow: ellipsis;
-  padding: 0px;
   margin: 0px;
+  margin-right: 40px;
+  font-size: 1em;
   font-family: inherit;
-`;
-
-export const GuideText = styled.p`
-  margin-left: 10px;
-  margin-right: 10px;
 `;
 
 export const ContentInput = styled.input`
@@ -75,4 +77,9 @@ export const ContentInput = styled.input`
 export const DateInput = styled.input`
   font-size: 1em;
   font-family: inherit;
+`;
+
+export const GuideText = styled.p`
+  margin-left: 10px;
+  margin-right: 10px;
 `;

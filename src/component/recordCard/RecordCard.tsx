@@ -6,15 +6,29 @@ interface Props {
   type: "common" | "my" | "edit";
   recordType: RecordTypeToNumber;
   record: ResumeRecord;
+  onClick: () => void;
   onEdit: () => void;
-  onEditDone: () => void;
-  onDelete: () => void;
+  onEditDone: (
+    id: number,
+    type: number,
+    name: string,
+    role?: string,
+    period?: string,
+    description?: string,
+    department?: string,
+    from?: string,
+    start?: string,
+    end?: string,
+    identifier?: string
+  ) => void;
+  onDelete: (id: number) => void;
 }
 
 const RecordCard = ({
   type,
   recordType,
   record,
+  onClick,
   onEdit,
   onEditDone,
   onDelete,
@@ -28,6 +42,7 @@ const RecordCard = ({
           type={type}
           recordType={recordType}
           record={record}
+          onClick={onClick}
           onEdit={onEdit}
           onDelete={onDelete}
         />

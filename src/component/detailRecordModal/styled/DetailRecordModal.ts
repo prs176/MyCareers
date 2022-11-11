@@ -1,42 +1,50 @@
 import styled from "styled-components";
 
 export const RootContainer = styled.div`
-  width: 290px;
-  margin: 5px;
-  margin-top: 0px;
-  padding: 10px 20px;
-  border: 1px solid lightgray;
-  border-radius: 15px;
+  overflow: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 500px;
+  background: white;
+  border-radius: 10px;
+`;
+
+export const Divider = styled.hr`
+  border: 0.5px solid lightgray;
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
+
+export const LogContainer = styled.div`
+  height: 85%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding-left: 20px;
+  padding-right: 20px;
 `;
 
 export const ToolContainer = styled.div`
-  height: 45px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 10px;
 `;
 
 export const NameText = styled.p`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  width: 200px;
   font-size: 1.2em;
   font-weight: 600;
   margin: 0px;
   margin-right: 10px;
-`;
-
-export const ContentContainer = styled.div`
-  cursor: pointer;
-`;
-
-export const NameInput = styled.input`
-  font-size: 1.2em;
-  font-family: inherit;
-  font-weight: 600;
-  margin: 0px;
-  margin-right: 10px;
+  margin-bottom: 10px;
 `;
 
 export const FieldWrapper = styled.div`
@@ -62,17 +70,12 @@ export const ContentText = styled.p`
   font-family: inherit;
 `;
 
-export const GuideText = styled.p`
-  margin-left: 10px;
-  margin-right: 10px;
+export const PlaceHolderWrapper = styled.div`
+  display: flex;
 `;
 
-export const ContentInput = styled.input`
-  font-size: 1em;
-  font-family: inherit;
-`;
-
-export const DateInput = styled.input`
-  font-size: 1em;
-  font-family: inherit;
+export const PlaceHolder = styled.div`
+  margin: auto;
+  margin-top: 100px;
+  color: #a5a5a5;
 `;

@@ -1,9 +1,15 @@
+import { Log } from "../../models/log";
 import { LogRequest } from "../request/log";
-import { MessageResponse } from "../response/response";
+import { MessageResponse, Response } from "../response/response";
 import instance from "../server/server";
 
+export const getLogs = async (recordId: number): Promise<Log[]> => {
+  const { data } = await instance.get<Response<Log[]>>(`/log/${recordId}`);
+  return data.response;
+};
+
 export const postLog = async (recordId: number, request: LogRequest): Promise<void> => {
-  await instance.post<MessageResponse>(`/log`, request);
+  await instance.post<MessageResponse>(`/log/${recordId}`, request);
   return;
 };
 

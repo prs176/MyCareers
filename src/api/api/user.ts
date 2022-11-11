@@ -14,6 +14,11 @@ export const getUsers = async (keyword: string): Promise<SimpleUser[]> => {
   return data.response;
 };
 
+export const getMyId = async (): Promise<number> => {
+  const { data } = await instance.get<Response<number>>(`/user/myid`);
+  return data.response;
+};
+
 export const postLogin = async (request: LoginRequest): Promise<void> => {
   const { data } = await instance.post<Response<string>>(`/user/login`, request);
   removeCookie("token");
@@ -26,7 +31,17 @@ export const postRegister = async (request: RegisterRequest): Promise<void> => {
   return;
 };
 
-export const putRegister = async (request: UserRequest): Promise<void> => {
+export const postGood = async (id: number): Promise<void> => {
+  await instance.post<MessageResponse>(`/user/good/${id}`);
+  return;
+};
+
+export const postNotGood = async (id: number): Promise<void> => {
+  await instance.post<MessageResponse>(`/user/notgood/${id}`);
+  return;
+};
+
+export const putUser = async (request: UserRequest): Promise<void> => {
   await instance.put<MessageResponse>(`/user/`, request);
   return;
 };

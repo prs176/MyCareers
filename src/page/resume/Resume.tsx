@@ -5,12 +5,13 @@ import * as Style from "./styled/Resume";
 import RecordCard from "../../component/recordCard/RecordCard";
 import EditRecordCard from "../../component/recordCard/EditRecordCard";
 import { ResumeRecord, RecordTypeToNumber, RecordType } from "../../models/record";
-import { getUser } from "../../api/api/user";
+import { getUser, postGood, postNotGood, putUser } from "../../api/api/user";
 import { useParams } from "react-router-dom";
-import { getRecords } from "../../api/api/record";
-import { AxiosError } from "axios";
-import { MessageResponse } from "../../api/response/response";
+import { deleteRecord, getRecords, postRecord, putRecord } from "../../api/api/record";
 import ProfileSection from "../../component/profileSection/ProfileSection";
+import handleAxiosError from "../../util/handleAxiosError";
+import { Modal } from "@mui/material";
+import DetailRecordModal from "../../component/detailRecordModal/DetailRecordModal";
 
 const Resume = (): JSX.Element => {
   const { userId } = useParams();
@@ -36,10 +37,24 @@ const Resume = (): JSX.Element => {
     RecordTypeToNumber.CAREER,
     false,
   ]);
-  const [editedRecordId, setEditedRecordId] = useState<number>(0);
+  const [editedRecordId, setEditedRecordId] = useState(0);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [openedRecord, setOpenedRecord] = useState<ResumeRecord>({
+    id: 0,
+    type: RecordTypeToNumber.CAREER,
+    name: "",
+    role: "",
+    period: "",
+    description: "",
+    department: "",
+    from: "",
+    start: "",
+    end: "",
+    identifier: "",
+  });
 
-  const setUp = useCallback(async () => {
-    try {
+  const setup = useCallback(async () => {
+    handleAxiosError(async () => {
       const user = await getUser(parseInt(userId!, 10));
       setUser(user);
 
@@ -53,30 +68,142 @@ const Resume = (): JSX.Element => {
           return acc;
         }, {} as Record<RecordTypeToNumber, ResumeRecord[]>)
       );
-    } catch (err) {
-      const axiosError = err as AxiosError;
-      if (axiosError.response) {
-        alert((axiosError.response.data as MessageResponse).message);
-      }
-    }
+    });
   }, [userId]);
-  const onEditProfile = async () => {
-    try {
-    } catch (err) {
-      const axiosError = err as AxiosError;
-      if (axiosError.response) {
-        alert((axiosError.response.data as MessageResponse).message);
-      }
-    }
+  const onEditProfileDone = (name: string, birth: string, intro: string) => {
+    handleAxiosError(async () => {
+      await putUser({ name, birth, intro });
+
+      const user = await getUser(parseInt(userId!, 10));
+      setUser(user);
+    });
   };
-  const onAdd = async () => {};
+  const onAdd = (
+    type: number,
+    name: string,
+    role?: string,
+    period?: string,
+    description?: string,
+    department?: string,
+    from?: string,
+    start?: string,
+    end?: string,
+    identifier?: string
+  ) => {
+    handleAxiosError(async () => {
+      await postRecord({
+        type,
+        name,
+        role,
+        period,
+        description,
+        department,
+        from,
+        start,
+        end,
+        identifier,
+      });
+
+      const records = await getRecords(parseInt(userId!, 10));
+      setRecords(
+        records.reduce<Record<RecordTypeToNumber, ResumeRecord[]>>((acc, record) => {
+          if (acc[record.type] === undefined) {
+            acc[record.type] = [];
+          }
+          acc[record.type].push(record);
+          return acc;
+        }, {} as Record<RecordTypeToNumber, ResumeRecord[]>)
+      );
+    });
+  };
+  const onEditDone = (
+    id: number,
+    type: number,
+    name: string,
+    role?: string,
+    period?: string,
+    description?: string,
+    department?: string,
+    from?: string,
+    start?: string,
+    end?: string,
+    identifier?: string
+  ) => {
+    handleAxiosError(async () => {
+      await putRecord(id, {
+        type,
+        name,
+        role,
+        period,
+        description,
+        department,
+        from,
+        start,
+        end,
+        identifier,
+      });
+
+      const records = await getRecords(parseInt(userId!, 10));
+      setRecords(
+        records.reduce<Record<RecordTypeToNumber, ResumeRecord[]>>((acc, record) => {
+          if (acc[record.type] === undefined) {
+            acc[record.type] = [];
+          }
+          acc[record.type].push(record);
+          return acc;
+        }, {} as Record<RecordTypeToNumber, ResumeRecord[]>)
+      );
+    });
+  };
+  const onDelete = (id: number) => {
+    handleAxiosError(async () => {
+      await deleteRecord(id);
+
+      const records = await getRecords(parseInt(userId!, 10));
+      setRecords(
+        records.reduce<Record<RecordTypeToNumber, ResumeRecord[]>>((acc, record) => {
+          if (acc[record.type] === undefined) {
+            acc[record.type] = [];
+          }
+          acc[record.type].push(record);
+          return acc;
+        }, {} as Record<RecordTypeToNumber, ResumeRecord[]>)
+      );
+    });
+  };
+  const onGood = () => {
+    handleAxiosError(async () => {
+      await postGood(parseInt(userId!, 10));
+
+      const user = await getUser(parseInt(userId!, 10));
+      setUser(user);
+    });
+  };
+  const onNotGood = () => {
+    handleAxiosError(async () => {
+      await postNotGood(parseInt(userId!, 10));
+
+      const user = await getUser(parseInt(userId!, 10));
+      setUser(user);
+    });
+  };
 
   useEffect(() => {
-    setUp();
-  }, [setUp]);
+    setup();
+  }, [setup]);
 
   return (
     <Style.RootContainer>
+      <Modal
+        open={isOpenModal}
+        onClose={() => {
+          setIsOpenModal(false);
+        }}
+      >
+        <div>
+          <DetailRecordModal isMine={user.isMine} record={openedRecord} />
+        </div>
+      </Modal>
       <Style.ResumeContainer>
         <ProfileSection
           type={isEditProfile ? "edit" : user?.isMine ? "my" : "common"}
@@ -84,8 +211,16 @@ const Resume = (): JSX.Element => {
           onEdit={() => {
             setIsEditProfile(true);
           }}
-          onEditDone={() => {
+          onEditDone={(name, birth, intro) => {
             setIsEditProfile(false);
+            onEditProfileDone(name, birth, intro);
+          }}
+          isGood={user.isGood}
+          onGood={() => {
+            onGood();
+          }}
+          onNotGood={() => {
+            onNotGood();
           }}
         />
 
@@ -106,8 +241,32 @@ const Resume = (): JSX.Element => {
             {isEdit[1] && isEdit[0] === recordType && !editedRecordId && (
               <EditRecordCard
                 recordType={isEdit[0]}
-                onEditDone={() => {
+                onEditDone={(
+                  _,
+                  type,
+                  name,
+                  role,
+                  period,
+                  description,
+                  department,
+                  from,
+                  start,
+                  end,
+                  identifier
+                ) => {
                   setIsEdit([RecordTypeToNumber.CAREER, false]);
+                  onAdd(
+                    type,
+                    name,
+                    role,
+                    period,
+                    description,
+                    department,
+                    from,
+                    start,
+                    end,
+                    identifier
+                  );
                 }}
               />
             )}
@@ -118,6 +277,10 @@ const Resume = (): JSX.Element => {
                   recordType={record.type}
                   type={record.id === editedRecordId ? "edit" : user?.isMine ? "my" : "common"}
                   record={record}
+                  onClick={() => {
+                    setOpenedRecord(record);
+                    setIsOpenModal(true);
+                  }}
                   onEdit={() => {
                     if (isEdit[1] || isEditProfile) {
                       return;
@@ -125,11 +288,38 @@ const Resume = (): JSX.Element => {
                     setIsEdit([record.type, true]);
                     setEditedRecordId(record.id);
                   }}
-                  onEditDone={() => {
+                  onEditDone={(
+                    id,
+                    type,
+                    name,
+                    role,
+                    period,
+                    description,
+                    department,
+                    from,
+                    start,
+                    end,
+                    identifier
+                  ) => {
                     setIsEdit([record.type, false]);
                     setEditedRecordId(0);
+                    onEditDone(
+                      id,
+                      type,
+                      name,
+                      role,
+                      period,
+                      description,
+                      department,
+                      from,
+                      start,
+                      end,
+                      identifier
+                    );
                   }}
-                  onDelete={() => {}}
+                  onDelete={(id) => {
+                    onDelete(id);
+                  }}
                 />
               ))}
           </Section>
