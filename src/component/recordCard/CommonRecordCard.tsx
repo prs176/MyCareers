@@ -21,9 +21,12 @@ const CommonRecordCard = ({
   onEdit,
   onDelete,
 }: Props): JSX.Element => {
-  const fields = RecordTypeToField[
-    RecordTypeToNumber[recordType] as keyof typeof RecordTypeToField
-  ] as [string, string][];
+  const fields = (
+    RecordTypeToField[RecordTypeToNumber[recordType] as keyof typeof RecordTypeToField] as [
+      string,
+      string
+    ][]
+  ).filter((field) => field[1] !== "name");
 
   return (
     <Style.RootContainer>

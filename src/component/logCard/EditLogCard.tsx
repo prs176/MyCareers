@@ -41,7 +41,7 @@ const EditLogCard = ({ log, onEditDone }: Props): JSX.Element => {
   return (
     <Style.RootContainer>
       <Style.ToolContainer>
-        <Style.NameInput placeholder="제목" value={title} onChange={onChangeTitle} />
+        <Style.NameInput placeholder="제목" value={title} onChange={onChangeTitle} maxLength={30} />
         <div>
           <IconButton
             onClick={() =>
@@ -63,55 +63,77 @@ const EditLogCard = ({ log, onEditDone }: Props): JSX.Element => {
       </Style.ToolContainer>
 
       <Style.FieldContainer>
-        <Style.FieldWrapper>
-          <Style.TitleText>개요</Style.TitleText>
-          <Style.ContentInput placeholder="개요" value={intro} onChange={onChangeIntro} />
-        </Style.FieldWrapper>
+        <Style.LeftRightFieldContainer>
+          <Style.FieldWrapper>
+            <Style.TitleText>개요</Style.TitleText>
+            <Style.ContentInput
+              placeholder="개요"
+              value={intro}
+              onChange={onChangeIntro}
+              maxLength={100}
+            />
+          </Style.FieldWrapper>
 
-        <Style.FieldWrapper>
-          <Style.TitleText>기간</Style.TitleText>
-          <Style.DateInput
-            max="9999-12-31"
-            type="date"
-            value={period1}
-            onChange={onChangePeriod1}
-          />
-          <Style.GuideText> ~ </Style.GuideText>
-          <Style.DateInput
-            max="9999-12-31"
-            type="date"
-            value={period2}
-            onChange={onChangePeriod2}
-          />
-        </Style.FieldWrapper>
+          <Style.FieldWrapper>
+            <Style.TitleText>기간</Style.TitleText>
+            <Style.DateInputContainer>
+              <Style.DateInput
+                max="9999-12-31"
+                type="date"
+                value={period1}
+                onChange={onChangePeriod1}
+              />
+              <Style.GuideText>~</Style.GuideText>
+              <Style.DateInput
+                max="9999-12-31"
+                type="date"
+                value={period2}
+                onChange={onChangePeriod2}
+              />
+            </Style.DateInputContainer>
+          </Style.FieldWrapper>
 
-        <Style.FieldWrapper>
-          <Style.TitleText>배운점</Style.TitleText>
-          <Style.ContentInput placeholder="배운점" value={learning} onChange={onChangeLearning} />
-        </Style.FieldWrapper>
+          <Style.FieldWrapper>
+            <Style.TitleText>배운점</Style.TitleText>
+            <Style.ContentInput
+              placeholder="배운점(선택)"
+              value={learning}
+              onChange={onChangeLearning}
+              maxLength={100}
+            />
+          </Style.FieldWrapper>
+        </Style.LeftRightFieldContainer>
+        <Style.LeftRightFieldContainer>
+          <Style.FieldWrapper>
+            <Style.TitleText>기여점</Style.TitleText>
+            <Style.ContentInput
+              placeholder="기여점(선택)"
+              value={contribution}
+              onChange={onChangeContribution}
+              maxLength={100}
+            />
+          </Style.FieldWrapper>
 
-        <Style.FieldWrapper>
-          <Style.TitleText>기여점</Style.TitleText>
-          <Style.ContentInput
-            placeholder="기여점"
-            value={contribution}
-            onChange={onChangeContribution}
-          />
-        </Style.FieldWrapper>
+          <Style.FieldWrapper>
+            <Style.TitleText>성장점</Style.TitleText>
+            <Style.ContentInput
+              placeholder="어려웠던 점 및 극복법(선택)"
+              value={overcame}
+              onChange={onChangeOvercame}
+              maxLength={100}
+            />
+          </Style.FieldWrapper>
 
-        <Style.FieldWrapper>
-          <Style.TitleText>어려웠던 점 및 극복법</Style.TitleText>
-          <Style.ContentInput
-            placeholder="어려웠던 점 및 극복법"
-            value={overcame}
-            onChange={onChangeOvercame}
-          />
-        </Style.FieldWrapper>
-
-        <Style.FieldWrapper>
-          <Style.TitleText>기타</Style.TitleText>
-          <Style.ContentInput placeholder="기타" value={etc} onChange={onChangeEtc} />
-        </Style.FieldWrapper>
+          <Style.FieldWrapper>
+            <Style.TitleText>기타</Style.TitleText>
+            <Style.ContentInput
+              placeholder="기타(선택)"
+              value={etc}
+              onChange={onChangeEtc}
+              maxLength={100}
+            />
+          </Style.FieldWrapper>
+        </Style.LeftRightFieldContainer>
       </Style.FieldContainer>
 
       <Style.Divider></Style.Divider>

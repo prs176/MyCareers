@@ -31,35 +31,39 @@ const CommonLogCard = ({ type, log, onEdit, onDelete }: Props): JSX.Element => {
       </Style.ToolContainer>
 
       <Style.FieldContainer>
-        <Style.FieldWrapper>
-          <Style.TitleText>개요</Style.TitleText>
-          <Style.ContentText>{log.intro}</Style.ContentText>
-        </Style.FieldWrapper>
+        <Style.LeftRightFieldContainer>
+          <Style.FieldWrapper>
+            <Style.TitleText>개요</Style.TitleText>
+            <Style.ContentText>{log.intro}</Style.ContentText>
+          </Style.FieldWrapper>
 
-        <Style.FieldWrapper>
-          <Style.TitleText>기간</Style.TitleText>
-          <Style.ContentText>{log.period}</Style.ContentText>
-        </Style.FieldWrapper>
+          <Style.FieldWrapper>
+            <Style.TitleText>기간</Style.TitleText>
+            <Style.ContentText>{log.period}</Style.ContentText>
+          </Style.FieldWrapper>
 
-        <Style.FieldWrapper>
-          <Style.TitleText>배운점</Style.TitleText>
-          <Style.ContentText>{log.learning}</Style.ContentText>
-        </Style.FieldWrapper>
+          <Style.FieldWrapper>
+            <Style.TitleText>배운점</Style.TitleText>
+            <Style.ContentText>{log.learning}</Style.ContentText>
+          </Style.FieldWrapper>
+        </Style.LeftRightFieldContainer>
 
-        <Style.FieldWrapper>
-          <Style.TitleText>기여점</Style.TitleText>
-          <Style.ContentText>{log.contribution}</Style.ContentText>
-        </Style.FieldWrapper>
+        <Style.LeftRightFieldContainer>
+          <Style.FieldWrapper>
+            <Style.TitleText>기여점</Style.TitleText>
+            <Style.ContentText>{log.contribution}</Style.ContentText>
+          </Style.FieldWrapper>
 
-        <Style.FieldWrapper>
-          <Style.TitleText>어려웠던 점 및 극복법</Style.TitleText>
-          <Style.ContentText>{log.overcame}</Style.ContentText>
-        </Style.FieldWrapper>
+          <Style.FieldWrapper>
+            <Style.TitleText>성장점</Style.TitleText>
+            <Style.ContentText>{log.overcame}</Style.ContentText>
+          </Style.FieldWrapper>
 
-        <Style.FieldWrapper>
-          <Style.TitleText>기타</Style.TitleText>
-          <Style.ContentText>{log.etc}</Style.ContentText>
-        </Style.FieldWrapper>
+          <Style.FieldWrapper>
+            <Style.TitleText>기타</Style.TitleText>
+            <Style.ContentText>{log.etc}</Style.ContentText>
+          </Style.FieldWrapper>
+        </Style.LeftRightFieldContainer>
       </Style.FieldContainer>
 
       <Style.Divider></Style.Divider>

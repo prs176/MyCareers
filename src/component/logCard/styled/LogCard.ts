@@ -41,45 +41,55 @@ export const NameInput = styled.input`
 
 export const FieldContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
+`;
+
+export const LeftRightFieldContainer = styled.div`
+  width: 50%;
 `;
 
 export const FieldWrapper = styled.div`
-  width: 50%;
-  height: 20px;
   display: flex;
-  align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 `;
 
 export const TitleText = styled.p`
   font-size: 0.9em;
   margin: 0px;
-  margin-right: 10px;
+  width: 60px;
   color: #727272;
 `;
 
 export const ContentText = styled.p`
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  margin: 0px;
   margin-right: 40px;
-  font-size: 1em;
+  width: 70%;
+  overflow-wrap: break-word;
+  padding: 0px;
+  margin: 0px;
+  font-size: 0.9em;
   font-family: inherit;
 `;
 
 export const ContentInput = styled.input`
   font-size: 1em;
+  width: 70%;
   font-family: inherit;
+  font-size: 0.9em;
+`;
+
+export const DateInputContainer = styled.div`
+  display: flex;
+  height: 20px;
+  align-items: center;
 `;
 
 export const DateInput = styled.input`
   font-size: 1em;
   font-family: inherit;
+  height: 20px;
 `;
 
 export const GuideText = styled.p`
   margin-left: 10px;
   margin-right: 10px;
+  height: 20px;
 `;

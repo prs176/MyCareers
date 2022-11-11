@@ -23,9 +23,12 @@ interface Props {
 }
 
 const EditRecordCard = ({ record, recordType, onEditDone }: Props): JSX.Element => {
-  const fields = RecordTypeToField[
-    RecordTypeToNumber[recordType] as keyof typeof RecordTypeToField
-  ] as [string, string][];
+  const fields = (
+    RecordTypeToField[RecordTypeToNumber[recordType] as keyof typeof RecordTypeToField] as [
+      string,
+      string
+    ][]
+  ).filter((field) => field[1] !== "name");
 
   const [state, onChange] = useInput({
     name: record?.name || "",
@@ -89,7 +92,7 @@ const EditRecordCard = ({ record, recordType, onEditDone }: Props): JSX.Element 
               value={state[field[1]]}
             />
           ) : (
-            <>
+            <Style.DateInputContainer>
               <Style.DateInput
                 type={"date"}
                 name="period1"
@@ -105,7 +108,7 @@ const EditRecordCard = ({ record, recordType, onEditDone }: Props): JSX.Element 
                 value={state["period2"]}
                 max="9999-12-31"
               ></Style.DateInput>
-            </>
+            </Style.DateInputContainer>
           )}
         </Style.FieldWrapper>
       ))}

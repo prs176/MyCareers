@@ -40,9 +40,7 @@ export const NameInput = styled.input`
 `;
 
 export const FieldWrapper = styled.div`
-  height: 20px;
   display: flex;
-  align-items: center;
   margin-bottom: 10px;
 `;
 
@@ -54,25 +52,32 @@ export const TitleText = styled.p`
 `;
 
 export const ContentText = styled.p`
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  width: 80%;
   padding: 0px;
   margin: 0px;
   font-family: inherit;
 `;
 
+export const DateInputContainer = styled.div`
+  display: flex;
+  height: 20px;
+  align-items: center;
+`;
+
 export const GuideText = styled.p`
   margin-left: 10px;
   margin-right: 10px;
+  height: 20px;
 `;
 
 export const ContentInput = styled.input`
   font-size: 1em;
   font-family: inherit;
+  width: 80%;
 `;
 
 export const DateInput = styled.input`
   font-size: 1em;
+  height: 20px;
   font-family: inherit;
 `;
