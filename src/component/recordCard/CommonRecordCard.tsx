@@ -56,6 +56,8 @@ const CommonRecordCard = ({
           </Style.FieldWrapper>
         ))}
       </Style.ContentContainer>
+
+      <Style.CountText>로그 수 {record.count}</Style.CountText>
     </Style.RootContainer>
   );
 };

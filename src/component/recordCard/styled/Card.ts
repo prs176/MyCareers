@@ -81,3 +81,12 @@ export const DateInput = styled.input`
   height: 20px;
   font-family: inherit;
 `;
+
+export const CountText = styled.p`
+  display: flex;
+  margin: 0px;
+  margin-bottom: 3px;
+  justify-content: right;
+  font-size: 0.8em;
+  color: gray;
+`;

@@ -51,6 +51,7 @@ const Resume = (): JSX.Element => {
     start: "",
     end: "",
     identifier: "",
+    count: 0,
   });
 
   const setup = useCallback(async () => {
@@ -70,6 +71,20 @@ const Resume = (): JSX.Element => {
       );
     });
   }, [userId]);
+  const onFetchRecords = () => {
+    handleAxiosError(async () => {
+      const records = await getRecords(parseInt(userId!, 10));
+      setRecords(
+        records.reduce<Record<RecordTypeToNumber, ResumeRecord[]>>((acc, record) => {
+          if (acc[record.type] === undefined) {
+            acc[record.type] = [];
+          }
+          acc[record.type].push(record);
+          return acc;
+        }, {} as Record<RecordTypeToNumber, ResumeRecord[]>)
+      );
+    });
+  };
   const onEditProfileDone = (name: string, birth: string, intro: string) => {
     handleAxiosError(async () => {
       await putUser({ name, birth, intro });
@@ -198,6 +213,7 @@ const Resume = (): JSX.Element => {
         open={isOpenModal}
         onClose={() => {
           setIsOpenModal(false);
+          onFetchRecords();
         }}
       >
         <div>
@@ -239,57 +255,11 @@ const Resume = (): JSX.Element => {
             }}
           >
             {isEdit[1] && isEdit[0] === recordType && !editedRecordId && (
-              <EditRecordCard
-                recordType={isEdit[0]}
-                onEditDone={(
-                  _,
-                  type,
-                  name,
-                  role,
-                  period,
-                  description,
-                  department,
-                  from,
-                  start,
-                  end,
-                  identifier
-                ) => {
-                  setIsEdit([RecordTypeToNumber.CAREER, false]);
-                  onAdd(
-                    type,
-                    name,
-                    role,
-                    period,
-                    description,
-                    department,
-                    from,
-                    start,
-                    end,
-                    identifier
-                  );
-                }}
-              />
-            )}
-            {records[recordType as RecordTypeToNumber] &&
-              records[recordType as RecordTypeToNumber].map((record) => (
-                <RecordCard
-                  key={record.id}
-                  recordType={record.type}
-                  type={record.id === editedRecordId ? "edit" : user?.isMine ? "my" : "common"}
-                  record={record}
-                  onClick={() => {
-                    setOpenedRecord(record);
-                    setIsOpenModal(true);
-                  }}
-                  onEdit={() => {
-                    if (isEdit[1] || isEditProfile) {
-                      return;
-                    }
-                    setIsEdit([record.type, true]);
-                    setEditedRecordId(record.id);
-                  }}
+              <div>
+                <EditRecordCard
+                  recordType={isEdit[0]}
                   onEditDone={(
-                    id,
+                    _,
                     type,
                     name,
                     role,
@@ -301,10 +271,8 @@ const Resume = (): JSX.Element => {
                     end,
                     identifier
                   ) => {
-                    setIsEdit([record.type, false]);
-                    setEditedRecordId(0);
-                    onEditDone(
-                      id,
+                    setIsEdit([RecordTypeToNumber.CAREER, false]);
+                    onAdd(
                       type,
                       name,
                       role,
@@ -317,10 +285,62 @@ const Resume = (): JSX.Element => {
                       identifier
                     );
                   }}
-                  onDelete={(id) => {
-                    onDelete(id);
-                  }}
                 />
+              </div>
+            )}
+            {records[recordType as RecordTypeToNumber] &&
+              records[recordType as RecordTypeToNumber].map((record) => (
+                <div>
+                  <RecordCard
+                    key={record.id}
+                    recordType={record.type}
+                    type={record.id === editedRecordId ? "edit" : user?.isMine ? "my" : "common"}
+                    record={record}
+                    onClick={() => {
+                      setOpenedRecord(record);
+                      setIsOpenModal(true);
+                    }}
+                    onEdit={() => {
+                      if (isEdit[1] || isEditProfile) {
+                        return;
+                      }
+                      setIsEdit([record.type, true]);
+                      setEditedRecordId(record.id);
+                    }}
+                    onEditDone={(
+                      id,
+                      type,
+                      name,
+                      role,
+                      period,
+                      description,
+                      department,
+                      from,
+                      start,
+                      end,
+                      identifier
+                    ) => {
+                      setIsEdit([record.type, false]);
+                      setEditedRecordId(0);
+                      onEditDone(
+                        id,
+                        type,
+                        name,
+                        role,
+                        period,
+                        description,
+                        department,
+                        from,
+                        start,
+                        end,
+                        identifier
+                      );
+                    }}
+                    onDelete={(id) => {
+                      onDelete(id);
+                    }}
+                  />
+                </div>
               ))}
           </Section>
         ))}

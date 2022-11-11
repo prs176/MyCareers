@@ -12,6 +12,7 @@ export interface ResumeRecord {
   start?: string;
   end?: string;
   identifier?: string;
+  count: number;
 }
 
 export enum RecordType {
